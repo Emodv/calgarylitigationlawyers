@@ -1,39 +1,29 @@
-import { lawyers } from "@/lib/lawyers";
+import Link from "next/link";
+import DirectorySearch from "@/components/DirectorySearch";
+import { directoryEntries } from "@/lib/lawyers";
 
 export default function Home() {
-  const sorted = [...lawyers].sort((a, b) => b.rankingScore - a.rankingScore);
-
   return (
     <>
       <section className="hero">
-        <div className="container">
-          <h1>Calgary Litigation Lawyers</h1>
-          <p>The #1 independent directory and ranking hub for litigation lawyers in Calgary, Alberta. Every profile includes public contact details so you can reach them directly.</p>
-          <a href="#directory" className="btn">Browse Ranked Lawyers</a>
+        <div className="container hero-inner">
+          <p className="eyebrow">Independent directory · Calgary, Alberta</p>
+          <h1>Find litigation counsel in Calgary</h1>
+          <p>Browse law firms and individual lawyer profiles, compare stated practice areas, and go directly to each firm’s published contact channels.</p>
+          <a href="#directory" className="btn">Browse the directory</a>
         </div>
       </section>
-
-      <section id="directory" className="container">
-        <h2 style={{ margin: "40px 0 10px" }}>Ranked Calgary Litigation Lawyers</h2>
-        <p style={{ marginBottom: 20, color: "#555" }}>Rankings compiled from public sources including Chambers, Lexpert, Best Lawyers, and firm recognition. Scores are directional and updated as new data appears. Lawyers can claim profiles to add bios, photos, and case highlights.</p>
-        
-        <div className="grid">
-          {sorted.map((lawyer) => (
-            <a key={lawyer.slug} href={`/lawyers/${lawyer.slug}`} className={`card ${lawyer.featured ? "featured" : ""}`} style={{ textDecoration: "none", color: "inherit" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-                <h3>{lawyer.name}</h3>
-                <span className="score">{lawyer.rankingScore}</span>
-              </div>
-              <p style={{ color: "#666", margin: "8px 0" }}>{lawyer.type}</p>
-              <p style={{ fontSize: "0.9rem" }}>{lawyer.practiceAreas.slice(0, 3).join(" · ")}</p>
-              <p style={{ marginTop: 12, fontWeight: 600, color: "var(--navy)" }}>View Profile →</p>
-            </a>
-          ))}
+      <section id="directory" className="container section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Initial source-checked listings</p>
+            <h2>Calgary litigation directory</h2>
+            <p>Listings are checked against the firm’s or lawyer’s own website. This is an initial directory, not a complete roster or a recommendation.</p>
+          </div>
+          <Link href="/lawyers" className="text-link">Open full directory →</Link>
         </div>
-
-        <div style={{ textAlign: "center", margin: "40px 0" }}>
-          <p>More lawyers being added. <a href="/advertise" className="btn">Get Your Firm Listed & Featured</a></p>
-        </div>
+        <DirectorySearch entries={directoryEntries} />
+        <div className="notice"><strong>Choosing counsel:</strong> This directory does not rank or endorse lawyers. Check a lawyer’s status and contact details through the <a href="https://www.lawsociety.ab.ca/public/findalawyer/" target="_blank" rel="noopener noreferrer">Law Society of Alberta directory</a> before making a decision.</div>
       </section>
     </>
   );

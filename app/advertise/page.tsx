@@ -1,25 +1,27 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sponsorship information",
+  description: "Information about potential clearly labeled sponsorships in the Calgary litigation directory."
+};
+
 export default function Advertise() {
   return (
-    <div className="container" style={{ padding: "60px 20px" }}>
-      <h1>Get Featured on Calgary Litigation Lawyers</h1>
-      <p style={{ fontSize: "1.1rem", margin: "20px 0" }}>This is the dedicated hub for people searching for litigation lawyers in Calgary. We list every firm and lawyer with public contact details so clients can reach you directly.</p>
-      
-      <div className="card" style={{ maxWidth: 600, margin: "30px 0" }}>
-        <h2>Featured Listing — $1,000 / month</h2>
-        <ul style={{ margin: "16px 0 16px 20px" }}>
-          <li>Priority placement in directory rankings</li>
-          <li>Enhanced profile with full bio, team, case highlights, and photos</li>
-          <li>Direct lead notifications</li>
-          <li>Blog and content mentions</li>
-          <li>Schema markup for better search visibility</li>
+    <section className="container section">
+      <p className="eyebrow">For law firms and lawyers</p>
+      <h1>Sponsorship information</h1>
+      <p className="page-intro">The directory is testing whether firms want clearly labeled advertising alongside a neutral, alphabetical directory.</p>
+      <div className="card" style={{ maxWidth: 760, marginTop: 24 }}>
+        <h2>Proposed pilot</h2>
+        <p>A fixed monthly sponsorship price of $1,000 is being considered. No paid placement is currently active, and no lead volume is promised.</p>
+        <ul>
+          <li>Any paid placement will be clearly labeled “Sponsored.”</li>
+          <li>Payment will not change the alphabetical directory order or imply a quality ranking.</li>
+          <li>Fees will not be based on a specific client, file, or legal fee.</li>
+          <li>Public contact details will remain visible on listings where they are published by the firm or lawyer.</li>
         </ul>
-        <a href="mailto:hello@calgarylitigationlawyers.com?subject=Featured Listing Inquiry" className="btn">Inquire About Featured Listing</a>
+        <p className="source-note">The advertising model and any paid placement are subject to professional-conduct review before sale. Sponsorship inquiries are not yet open.</p>
       </div>
-
-      <h2>Free Basic Profile</h2>
-      <p>Every Calgary litigation lawyer gets a basic free profile with public address, phone, and email. Claim it to keep the information accurate.</p>
-      
-      <p style={{ marginTop: 30 }}>We are building this to be the permanent #1 source. Domain, content, and rankings compound over time. The site can be sold as an asset or run as a recurring revenue business.</p>
-    </div>
+    </section>
   );
 }

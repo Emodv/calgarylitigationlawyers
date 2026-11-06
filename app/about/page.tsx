@@ -1,11 +1,16 @@
 export default function About() {
   return (
-    <div className="container" style={{ padding: "60px 20px" }}>
-      <h1>About Calgary Litigation Lawyers</h1>
-      <p>This is an independent directory created to be the single best resource for finding litigation lawyers in Calgary.</p>
-      <p style={{ marginTop: 16 }}>We list publicly available contact information (address, phone, email) so people can reach lawyers directly. Rankings are compiled from public recognition sources such as Chambers, Lexpert, Best Lawyers, and firm announcements.</p>
-      <p style={{ marginTop: 16 }}>The site is not a law firm and does not provide legal advice. Always verify information with the firm and consider multiple options before hiring counsel.</p>
-      <p style={{ marginTop: 16 }}>Lawyers and firms can claim their profiles and upgrade to featured status to add richer content and receive leads.</p>
-    </div>
+    <section className="container section">
+      <p className="eyebrow">About the directory</p>
+      <h1>An independent Calgary litigation directory</h1>
+      <p className="page-intro">This site helps visitors browse publicly available firm and lawyer information and reach the firm’s own website.</p>
+      <div className="card" style={{ maxWidth: 850, marginTop: 24 }}>
+        <h2>How listings are prepared</h2>
+        <p>Each listing links to a first-party firm or lawyer source. The “source checked” date shows when the displayed details were compared with that source. It does not confirm current Law Society status, recommend a lawyer, or guarantee that every detail remains current.</p>
+        <p>The current directory is an initial set of listings and is not a complete list of Calgary litigation counsel. Practice areas are summarized from each source and are not independent assessments.</p>
+        <p>For the current practising status of an individual lawyer, use the <a href="https://www.lawsociety.ab.ca/public/findalawyer/" target="_blank" rel="noopener noreferrer">Law Society of Alberta Lawyer Directory</a>. We do not bulk reproduce its directory records.</p>
+        <p>This site is not a law firm, does not provide legal advice, and does not endorse or rank lawyers.</p>
+      </div>
+    </section>
   );
 }

@@ -1,64 +1,56 @@
-import { lawyers } from "@/lib/lawyers";
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { directoryEntries } from "@/lib/lawyers";
 
-export async function generateStaticParams() {
-  return lawyers.map((l) => ({ slug: l.slug }));
+type PageProps = { params: Promise<{ slug: string }> };
+
+export function generateStaticParams() {
+  return directoryEntries.map((entry) => ({ slug: entry.slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const lawyer = lawyers.find((l) => l.slug === params.slug);
-  if (!lawyer) return {};
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const entry = directoryEntries.find((item) => item.slug === slug);
+  if (!entry) return { title: "Listing not found" };
   return {
-    title: `${lawyer.name} | Calgary Litigation Lawyer`,
-    description: `${lawyer.bio} Address, phone, and contact details for ${lawyer.name} in Calgary.`,
+    title: `${entry.name} | Calgary litigation directory`,
+    description: `${entry.summary} Practice areas and contact details sourced from the official website.`,
+    alternates: { canonical: `/lawyers/${entry.slug}` }
   };
 }
 
-export default function LawyerProfile({ params }: { params: { slug: string } }) {
-  const lawyer = lawyers.find((l) => l.slug === params.slug);
-  if (!lawyer) notFound();
+export default async function DirectoryProfile({ params }: PageProps) {
+  const { slug } = await params;
+  const entry = directoryEntries.find((item) => item.slug === slug);
+  if (!entry) notFound();
 
   return (
-    <>
-      <section className="profile-hero">
-        <div className="container">
-          <h1>{lawyer.name}</h1>
-          <p>{lawyer.type} · Ranking Score: {lawyer.rankingScore}</p>
-        </div>
-      </section>
-      <div className="container">
-        <div className="profile-content">
-          <p>{lawyer.bio}</p>
-          
-          <h3 style={{ marginTop: 24 }}>Practice Areas</h3>
-          <ul style={{ marginLeft: 20, marginTop: 8 }}>
-            {lawyer.practiceAreas.map((area) => <li key={area}>{area}</li>)}
-          </ul>
-
-          {lawyer.rankings.length > 0 && (
-            <>
-              <h3 style={{ marginTop: 24 }}>Public Recognition</h3>
-              <ul style={{ marginLeft: 20, marginTop: 8 }}>
-                {lawyer.rankings.map((r) => <li key={r}>{r}</li>)}
-              </ul>
-            </>
-          )}
-
-          <div className="contact-box">
-            <h3>Contact</h3>
-            <p><strong>Address:</strong> {lawyer.address}</p>
-            <p><strong>Phone:</strong> <a href={`tel:${lawyer.phone}`}>{lawyer.phone}</a></p>
-            {lawyer.email && <p><strong>Email:</strong> <a href={`mailto:${lawyer.email}`}>{lawyer.email}</a></p>}
-            {lawyer.website && <p><strong>Website:</strong> <a href={lawyer.website} target="_blank" rel="noopener noreferrer">{lawyer.website}</a></p>}
-          </div>
-
-          <div style={{ marginTop: 30, padding: 20, background: "#fff8e1", borderRadius: 6 }}>
-            <p><strong>Is this your firm?</strong> Claim this profile to add a full bio, team photos, case results, and appear higher in rankings. Featured listings start at $1,000/month and generate qualified leads.</p>
-            <a href="/advertise" className="btn" style={{ marginTop: 12 }}>Claim or Upgrade Profile</a>
-          </div>
-        </div>
+    <section className="container section profile-page">
+      <Link href="/lawyers" className="text-link">← Back to directory</Link>
+      <p className="eyebrow">{entry.kind === "firm" ? "Law firm listing" : "Lawyer listing"}</p>
+      <h1>{entry.name}</h1>
+      {entry.firmName && <p className="profile-firm">{entry.title ? `${entry.title} · ` : ""}{entry.firmName}</p>}
+      <p className="page-intro">{entry.summary}</p>
+      <div className="profile-columns">
+        <article className="card profile-card">
+          <h2>Stated practice areas</h2>
+          <ul className="practice-list">{entry.practiceAreas.map((area) => <li key={area}>{area}</li>)}</ul>
+          <p className="source-note">Practice areas are summarized from the linked first-party source.</p>
+        </article>
+        <aside className="card contact-card">
+          <h2>Contact details</h2>
+          {entry.address && <p><strong>Address</strong><br />{entry.address}</p>}
+          {entry.phone && <p><strong>Phone</strong><br /><a href={`tel:${entry.phone.replace(/[^+\d]/g, "")}`}>{entry.phone}</a></p>}
+          {entry.email && <p><strong>Email</strong><br /><a href={`mailto:${entry.email}`}>{entry.email}</a></p>}
+          <p><strong>Website</strong><br /><a href={entry.website} target="_blank" rel="noopener noreferrer">Visit official website ↗</a></p>
+        </aside>
       </div>
-    </>
+      <div className="notice source-note-block">
+        Source checked {entry.sourceCheckedAt}. This confirms that the listing was compared with its cited website on that date; it is not a Law Society status check or an endorsement.
+        <br /><a href={entry.sourceUrl} target="_blank" rel="noopener noreferrer">View source page ↗</a>
+      </div>
+      <p className="disclaimer">Confirm current contact details and practising status with the lawyer or the <a href="https://www.lawsociety.ab.ca/public/findalawyer/" target="_blank" rel="noopener noreferrer">Law Society of Alberta</a>. This directory does not provide legal advice.</p>
+    </section>
   );
 }
