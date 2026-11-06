@@ -1,22 +1,19 @@
+import Link from "next/link";
+
+const guides = [
+  { slug: "questions-before-contacting-litigation-lawyer", title: "Questions to ask before contacting a litigation lawyer", summary: "A practical checklist for preparing an initial conversation about a dispute." },
+  { slug: "calgary-litigation-directory-sources", title: "How to check lawyer and firm information", summary: "Where to confirm a lawyer’s status and how to read an independent directory listing." }
+];
+
 export default function Blog() {
   return (
-    <div className="container" style={{ padding: "60px 20px" }}>
-      <h1>Calgary Litigation Insights</h1>
-      <p>Practical articles on civil and commercial litigation in Calgary and Alberta.</p>
-      
-      <div className="grid" style={{ marginTop: 30 }}>
-        <div className="card">
-          <h3>How to Choose a Litigation Lawyer in Calgary</h3>
-          <p>What to look for in experience, practice focus, and courtroom record when hiring for a commercial or civil dispute.</p>
-          <a href="/blog/how-to-choose-litigation-lawyer-calgary">Read →</a>
-        </div>
-        <div className="card">
-          <h3>Understanding the Alberta Rules of Court</h3>
-          <p>Key timelines and procedures that affect most Calgary civil litigation matters.</p>
-          <a href="/blog/alberta-rules-of-court-overview">Read →</a>
-        </div>
+    <section className="container section">
+      <p className="eyebrow">Plain-language guides</p>
+      <h1>Calgary litigation guides</h1>
+      <p className="page-intro">General information to help you prepare to contact legal counsel. These guides are not legal advice.</p>
+      <div className="grid">
+        {guides.map((guide) => <article className="card" key={guide.slug}><h2>{guide.title}</h2><p>{guide.summary}</p><Link className="text-link" href={`/blog/${guide.slug}`}>Read guide →</Link></article>)}
       </div>
-      <p style={{ marginTop: 30 }}>More articles published weekly. Topics cover commercial disputes, construction liens, employment litigation, class actions, and more.</p>
-    </div>
+    </section>
   );
 }

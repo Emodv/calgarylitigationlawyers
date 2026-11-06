@@ -1,18 +1,20 @@
 export default function FAQ() {
   return (
-    <div className="container" style={{ padding: "60px 20px" }}>
-      <h1>FAQ</h1>
-      <h3 style={{ marginTop: 24 }}>How do you rank the lawyers?</h3>
-      <p>Rankings use public sources including Chambers Canada rankings, Lexpert directory grades, Best Lawyers recognition, and firm announcements. Scores are directional and updated periodically. Featured listings may appear higher.</p>
-      
-      <h3 style={{ marginTop: 24 }}>Is the contact information accurate?</h3>
-      <p>We use publicly listed firm addresses, phones, and emails. Firms can claim profiles to correct or expand details.</p>
-      
-      <h3 style={{ marginTop: 24 }}>Can I get a free profile?</h3>
-      <p>Yes. Every Calgary litigation lawyer can have a basic free profile. Contact us to claim or update it.</p>
-      
-      <h3 style={{ marginTop: 24 }}>How much does a featured listing cost?</h3>
-      <p>$1,000 per month. Includes priority placement, enhanced profile, and lead generation support.</p>
-    </div>
+    <section className="container section">
+      <p className="eyebrow">Common questions</p>
+      <h1>Frequently asked questions</h1>
+      <div className="card" style={{ maxWidth: 850, marginTop: 24 }}>
+        <h2>How are listings ordered?</h2>
+        <p>Listings are displayed alphabetically. The directory does not rank lawyers by quality or experience.</p>
+        <h2>Is this a complete list of Calgary litigation lawyers?</h2>
+        <p>No. This is an initial directory and its coverage is incomplete.</p>
+        <h2>Are lawyers verified by the Law Society?</h2>
+        <p>No. We check listed details against the linked firm or lawyer website. Check a lawyer’s current status in the <a href="https://www.lawsociety.ab.ca/public/findalawyer/" target="_blank" rel="noopener noreferrer">Law Society of Alberta directory</a>.</p>
+        <h2>How current is the contact information?</h2>
+        <p>Each profile shows the date its first-party source was checked. Confirm current details directly with the firm or lawyer before relying on them.</p>
+        <h2>Does this site provide legal advice or refer a specific lawyer?</h2>
+        <p>No. It is a directory and general information resource. Visitors choose whom to contact.</p>
+      </div>
+    </section>
   );
 }

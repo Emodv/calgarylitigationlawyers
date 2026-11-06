@@ -1,16 +1,13 @@
-import { lawyers } from "@/lib/lawyers";
+import type { MetadataRoute } from "next";
+import { directoryEntries } from "@/lib/lawyers";
 
-export default function sitemap() {
+export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://calgarylitigationlawyers.com";
-  const staticPages = ["", "/blog", "/glossary", "/news", "/advertise", "/about", "/faq"].map((p) => ({
-    url: `${base}${p}`,
-    lastModified: new Date(),
-  }));
-
-  const lawyerPages = lawyers.map((l) => ({
-    url: `${base}/lawyers/${l.slug}`,
-    lastModified: new Date(),
-  }));
-
-  return [...staticPages, ...lawyerPages];
+  const staticPaths = ["", "/lawyers", "/blog", "/glossary", "/news", "/advertise", "/about", "/faq"];
+  const guideSlugs = ["questions-before-contacting-litigation-lawyer", "calgary-litigation-directory-sources"];
+  return [
+    ...staticPaths.map((path) => ({ url: `${base}${path}`, changeFrequency: "monthly" as const })),
+    ...directoryEntries.map((entry) => ({ url: `${base}/lawyers/${entry.slug}`, changeFrequency: "monthly" as const })),
+    ...guideSlugs.map((slug) => ({ url: `${base}/blog/${slug}`, changeFrequency: "yearly" as const }))
+  ];
 }

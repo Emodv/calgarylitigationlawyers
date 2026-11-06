@@ -1,49 +1,49 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://calgarylitigationlawyers.com"),
-  title: {
-    default: "Calgary Litigation Lawyers | #1 Directory & Rankings",
-    template: "%s | Calgary Litigation Lawyers"
-  },
-  description: "The definitive hub for Calgary litigation lawyers. Browse ranked profiles, contact details, practice areas, blog, glossary, and news. Find the right litigator in Calgary, Alberta.",
-  keywords: ["Calgary litigation lawyers", "civil litigation Calgary", "commercial litigation lawyers Calgary", "best litigation lawyers Calgary", "Alberta lawyers"],
+  title: { default: "Calgary Litigation Lawyers Directory", template: "%s | Calgary Litigation Lawyers" },
+  description: "An independent, source-checked directory of Calgary litigation law firms and lawyers. Initial coverage; not a complete roster or endorsement.",
   openGraph: {
     title: "Calgary Litigation Lawyers Directory",
-    description: "Ranked profiles and contact information for every litigation lawyer in Calgary.",
+    description: "Browse Calgary law firm and lawyer listings by stated practice areas, with links to official contact information.",
     url: "https://calgarylitigationlawyers.com",
     siteName: "Calgary Litigation Lawyers",
     locale: "en_CA",
-    type: "website",
-  },
+    type: "website"
+  }
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
         <header className="header">
-          <div className="container">
-            <a href="/" className="logo">Calgary Litigation Lawyers</a>
-            <nav>
-              <a href="/">Directory</a>
-              <a href="/blog">Blog</a>
-              <a href="/glossary">Glossary</a>
-              <a href="/news">News</a>
-              <a href="/advertise">Featured Listing</a>
+          <div className="container header-inner">
+            <Link href="/" className="logo">Calgary Litigation Lawyers</Link>
+            <nav aria-label="Main navigation">
+              <Link href="/lawyers">Directory</Link>
+              <Link href="/blog">Guides</Link>
+              <Link href="/glossary">Glossary</Link>
+              <Link href="/news">News sources</Link>
+              <Link href="/about">About</Link>
             </nav>
           </div>
         </header>
         <main>{children}</main>
         <footer className="footer">
-          <div className="container">
-            <p>© {new Date().getFullYear()} Calgary Litigation Lawyers. Independent directory. Not a law firm. Rankings compiled from public sources. Contact details are publicly available information.</p>
-            <p><a href="/advertise">Lawyers: Claim or upgrade your profile for $1,000/month</a></p>
+          <div className="container footer-inner">
+            <div>
+              <p>© {new Date().getFullYear()} Calgary Litigation Lawyers</p>
+              <p>Independent directory. Not a law firm, legal advice service, or endorsement service.</p>
+            </div>
+            <nav aria-label="Footer navigation">
+              <Link href="/about">About and sources</Link>
+              <Link href="/faq">FAQ</Link>
+              <Link href="/advertise">Sponsorship information</Link>
+            </nav>
           </div>
         </footer>
       </body>
