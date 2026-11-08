@@ -23,7 +23,7 @@ export default function Home() {
           {lawyers.map((lawyer) => <LawyerCard key={lawyer.slug} lawyer={lawyer} />)}
         </div>
         <div style={{ textAlign: "center", margin: "40px 0" }}>
-          <p>Lawyers and firms: <a href="/advertise" className="btn">Claim your profile</a></p>
+          <p>Lawyers and firms: <a href="/pricing" className="btn">Claim your profile</a></p>
         </div>
       </section>
     </>

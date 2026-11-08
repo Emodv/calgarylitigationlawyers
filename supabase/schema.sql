@@ -1,17 +1,20 @@
--- Calgary Litigation Lawyers: database schema.
--- Run once in Supabase > SQL Editor. Safe to re-run (idempotent where possible).
+-- Calgary Litigation Lawyers: database schema. Run once in Supabase > SQL Editor.
+-- Re-running on an existing database: drop the tables first (no production data yet).
+
+create extension if not exists pgcrypto;
 
 -- ---------------------------------------------------------------------------
--- lawyers: directory listings. Every row must cite a primary source.
--- A listing is public ONLY when is_verified = true, and verification requires
--- a recorded verification date and a verification source URL.
+-- lawyers: directory listings. Public only when verified.
+-- Verification is free and independent of any advertising tier.
 -- ---------------------------------------------------------------------------
-create table if not exists public.lawyers (
+create table public.lawyers (
   id                     uuid primary key default gen_random_uuid(),
   slug                   text not null unique check (slug ~ '^[a-z0-9-]+$'),
   name                   text not null,
   firm_name              text,
-  practice_areas         text[] not null default '{}',
+  practice_areas         text[] not null default '{}'
+    check (practice_areas <@ array['Commercial Litigation','Civil Litigation','Estate & Trust','Employment','Insolvency']::text[]),
+  law_society_number     text check (law_society_number is null or law_society_number ~ '^[A-Za-z0-9-]{3,20}$'),
   address                text,
   phone                  text,
   email                  text,
@@ -23,46 +26,44 @@ create table if not exists public.lawyers (
   verified_source_url    text check (verified_source_url is null or verified_source_url ~ '^https://'),
   created_at             timestamptz not null default now(),
   constraint verified_requires_evidence check (
-    is_verified = false or (verified_at is not null and verified_source_url is not null)
+    is_verified = false
+    or (verified_at is not null and verified_source_url is not null and law_society_number is not null)
   )
 );
 
 alter table public.lawyers enable row level security;
-
-drop policy if exists "Public can read verified lawyers" on public.lawyers;
-create policy "Public can read verified lawyers"
-  on public.lawyers for select
-  to anon, authenticated
-  using (is_verified = true);
-
+create policy "Public can read verified lawyers" on public.lawyers
+  for select to anon, authenticated using (is_verified = true);
 revoke all on public.lawyers from anon, authenticated;
 grant select on public.lawyers to anon, authenticated;
 
 -- ---------------------------------------------------------------------------
--- leads: inbound enquiries. Contains personal data. No public access.
--- Only the service role (server-side API route) can read or write.
+-- leads: consultation requests. Personal data. Server role only.
+-- issue_summary holds REDACTED text. The raw description is never stored.
 -- ---------------------------------------------------------------------------
-create table if not exists public.leads (
+create table public.leads (
   id                     uuid primary key default gen_random_uuid(),
-  score                  text not null check (score in ('Hot', 'Warm', 'Cold')),
-  practice_area          text not null,
-  urgency                text not null check (urgency in ('low', 'medium', 'high')),
+  lawyer_id              uuid references public.lawyers(id) on delete set null,
+  client_name            text,
+  client_email           text check (client_email is null or length(client_email) <= 254),
+  client_phone           text,
+  practice_area          text not null
+    check (practice_area in ('Commercial Litigation','Civil Litigation','Estate & Trust','Employment','Insolvency','Other / Unclear')),
+  issue_summary          text not null,
+  ai_redacted_summary    text,
+  ai_lead_score          text not null check (ai_lead_score in ('Hot','Warm','Cold')),
+  urgency                text check (urgency is null or urgency in ('low','medium','high')),
   deadline_mentioned     boolean not null default false,
-  summary                text,
-  redacted_description   text not null,
   redaction_counts       jsonb not null default '{}'::jsonb,
-  classification_status  text not null check (classification_status in ('ok', 'failed')),
-  contact_name           text,
-  contact_email          text check (contact_email is null or length(contact_email) <= 254),
-  contact_phone          text,
+  classification_status  text not null check (classification_status in ('ok','failed')),
   consent_at             timestamptz not null,
-  status                 text not null default 'new' check (status in ('new', 'routed', 'closed')),
+  status                 text not null default 'new' check (status in ('new','contacted','routed','closed')),
   created_at             timestamptz not null default now()
 );
 
 alter table public.leads enable row level security;
-
 revoke all on public.leads from anon, authenticated;
--- Intentionally no policies on leads: RLS is on with no grants for anon or authenticated.
+-- No policies on leads: anon and authenticated have no access. Only the service role can read or write.
 
-create index if not exists leads_score_created_idx on public.leads (score, created_at desc);
+create index leads_score_created_idx on public.leads (ai_lead_score, created_at desc);
+create index leads_lawyer_idx on public.leads (lawyer_id);

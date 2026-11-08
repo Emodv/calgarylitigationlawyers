@@ -4,7 +4,7 @@ import { lawyers } from "@/lib/lawyers";
 const base = "https://calgarylitigationlawyers.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = ["", "/lawyers", "/glossary", "/news", "/advertise", "/about", "/faq", "/blog"].map((p) => ({
+  const staticPages = ["", "/lawyers", "/glossary", "/news", "/pricing", "/about", "/faq", "/blog"].map((p) => ({
     url: `${base}${p}`,
     lastModified: new Date(),
   }));

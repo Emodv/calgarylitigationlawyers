@@ -25,7 +25,7 @@ const faqs = [
   },
   {
     q: "How much does advertising cost?",
-    a: "Verified $199, Pro $499, Elite $999. Each tier is a flat fee. Tiers do not change listing order. See the advertise page for what each tier includes.",
+    a: "Verified $199, Pro $499, Elite $999. Each tier is a flat fee. Tiers do not change listing order. See the pricing page for what each tier includes.",
   },
   {
     q: "Does this site provide legal advice?",

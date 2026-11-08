@@ -59,7 +59,7 @@ export default async function LawyerProfile({ params }: Props) {
 
           <div style={{ marginTop: 30, padding: 20, background: "#fff8e1", borderRadius: 6 }}>
             <p><strong>Is this your firm?</strong> Claiming and verification are free. Verification uses the firm&apos;s own records and public regulator information. Paid advertising never changes listing order or verification status.</p>
-            <a href="/advertise" className="btn" style={{ marginTop: 12 }}>Claim Your Profile</a>
+            <a href="/pricing" className="btn" style={{ marginTop: 12 }}>Claim Your Profile</a>
           </div>
         </div>
       </div>
