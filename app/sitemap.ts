@@ -1,8 +1,10 @@
+import type { MetadataRoute } from "next";
 import { lawyers } from "@/lib/lawyers";
 
-export default function sitemap() {
-  const base = "https://calgarylitigationlawyers.com";
-  const staticPages = ["", "/blog", "/glossary", "/news", "/advertise", "/about", "/faq"].map((p) => ({
+const base = "https://calgarylitigationlawyers.com";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticPages = ["", "/lawyers", "/glossary", "/news", "/advertise", "/about", "/faq", "/blog"].map((p) => ({
     url: `${base}${p}`,
     lastModified: new Date(),
   }));

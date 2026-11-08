@@ -1,11 +1,18 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "News",
+  description: "Updates from Calgary Litigation Lawyers.",
+  alternates: { canonical: "/news" },
+};
+
 export default function News() {
   return (
     <div className="container" style={{ padding: "60px 20px" }}>
-      <h1>Calgary Litigation News</h1>
-      <p>Updates on rankings, firm announcements, and legal developments relevant to Calgary litigators.</p>
+      <h1>News</h1>
       <div className="card" style={{ marginTop: 30 }}>
-        <h3>Site Launch</h3>
-        <p>Calgary Litigation Lawyers directory is now live with initial ranked profiles based on public data. More firms and individual lawyers being added.</p>
+        <h3>Directory Launch</h3>
+        <p>The directory is live with initial profiles drawn from firm websites. Profiles marked &ldquo;not yet verified&rdquo; are pending a primary-source check.</p>
       </div>
     </div>
   );

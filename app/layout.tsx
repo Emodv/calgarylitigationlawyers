@@ -4,14 +4,14 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://calgarylitigationlawyers.com"),
   title: {
-    default: "Calgary Litigation Lawyers | #1 Directory & Rankings",
-    template: "%s | Calgary Litigation Lawyers"
+    default: "Calgary Litigation Lawyers | Independent Directory",
+    template: "%s | Calgary Litigation Lawyers",
   },
-  description: "The definitive hub for Calgary litigation lawyers. Browse ranked profiles, contact details, practice areas, blog, glossary, and news. Find the right litigator in Calgary, Alberta.",
-  keywords: ["Calgary litigation lawyers", "civil litigation Calgary", "commercial litigation lawyers Calgary", "best litigation lawyers Calgary", "Alberta lawyers"],
+  description: "An independent directory of litigation lawyers in Calgary, Alberta. Search contact details and practice areas, plus a litigation glossary.",
+  keywords: ["Calgary litigation lawyers", "civil litigation Calgary", "commercial litigation lawyers Calgary", "Alberta lawyers"],
   openGraph: {
     title: "Calgary Litigation Lawyers Directory",
-    description: "Ranked profiles and contact information for every litigation lawyer in Calgary.",
+    description: "Contact details and practice areas for litigation lawyers in Calgary.",
     url: "https://calgarylitigationlawyers.com",
     siteName: "Calgary Litigation Lawyers",
     locale: "en_CA",
@@ -31,19 +31,19 @@ export default function RootLayout({
           <div className="container">
             <a href="/" className="logo">Calgary Litigation Lawyers</a>
             <nav>
-              <a href="/">Directory</a>
-              <a href="/blog">Blog</a>
+              <a href="/lawyers">Directory</a>
               <a href="/glossary">Glossary</a>
+              <a href="/blog">Insights</a>
               <a href="/news">News</a>
-              <a href="/advertise">Featured Listing</a>
+              <a href="/advertise">Advertise</a>
             </nav>
           </div>
         </header>
         <main>{children}</main>
         <footer className="footer">
           <div className="container">
-            <p>© {new Date().getFullYear()} Calgary Litigation Lawyers. Independent directory. Not a law firm. Rankings compiled from public sources. Contact details are publicly available information.</p>
-            <p><a href="/advertise">Lawyers: Claim or upgrade your profile for $1,000/month</a></p>
+            <p>© {new Date().getFullYear()} Calgary Litigation Lawyers. Independent directory. Not a law firm. Nothing on this site is legal advice. Contact details are publicly available information.</p>
+            <p><a href="/advertise">Lawyers: claim your profile free. Advertising from $199.</a></p>
           </div>
         </footer>
       </body>

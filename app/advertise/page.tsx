@@ -1,25 +1,67 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Advertise and Claim Your Profile",
+  description: "Claim your free profile or choose a flat-fee advertising tier. Placement is the same across all tiers.",
+  alternates: { canonical: "/advertise" },
+};
+
+const tiers = [
+  {
+    name: "Verified",
+    price: "$199",
+    items: [
+      "Claimed profile with firm-supplied contact details",
+      "Verification badge once a primary source is recorded (verification itself is free)",
+    ],
+  },
+  {
+    name: "Pro",
+    price: "$499",
+    items: [
+      "Everything in Verified",
+      "Enquiry routing: qualified enquiries in your practice areas forwarded to you, with consent recorded",
+    ],
+  },
+  {
+    name: "Elite",
+    price: "$999",
+    items: [
+      "Everything in Pro",
+      "Enhanced profile: biography, team, case highlights and photos, each subject to verification",
+    ],
+  },
+];
+
 export default function Advertise() {
   return (
     <div className="container" style={{ padding: "60px 20px" }}>
-      <h1>Get Featured on Calgary Litigation Lawyers</h1>
-      <p style={{ fontSize: "1.1rem", margin: "20px 0" }}>This is the dedicated hub for people searching for litigation lawyers in Calgary. We list every firm and lawyer with public contact details so clients can reach you directly.</p>
-      
-      <div className="card" style={{ maxWidth: 600, margin: "30px 0" }}>
-        <h2>Featured Listing — $1,000 / month</h2>
-        <ul style={{ margin: "16px 0 16px 20px" }}>
-          <li>Priority placement in directory rankings</li>
-          <li>Enhanced profile with full bio, team, case highlights, and photos</li>
-          <li>Direct lead notifications</li>
-          <li>Blog and content mentions</li>
-          <li>Schema markup for better search visibility</li>
-        </ul>
-        <a href="mailto:hello@calgarylitigationlawyers.com?subject=Featured Listing Inquiry" className="btn">Inquire About Featured Listing</a>
+      <h1>Claim Your Profile</h1>
+      <p style={{ fontSize: "1.1rem", margin: "20px 0" }}>
+        Claiming a profile and verification are free. Paid tiers buy advertising and enquiry routing. They do not buy placement, rankings, or verification.
+      </p>
+
+      <div className="grid" style={{ marginTop: 30 }}>
+        {tiers.map((t) => (
+          <div key={t.name} className="card">
+            <h2>{t.name} — {t.price}</h2>
+            <ul style={{ margin: "16px 0 16px 20px" }}>
+              {t.items.map((i) => <li key={i}>{i}</li>)}
+            </ul>
+            <a href={`mailto:hello@calgarylitigationlawyers.com?subject=${encodeURIComponent(`${t.name} tier enquiry`)}`} className="btn">
+              Request {t.name}
+            </a>
+          </div>
+        ))}
       </div>
 
-      <h2>Free Basic Profile</h2>
-      <p>Every Calgary litigation lawyer gets a basic free profile with public address, phone, and email. Claim it to keep the information accurate.</p>
-      
-      <p style={{ marginTop: 30 }}>We are building this to be the permanent #1 source. Domain, content, and rankings compound over time. The site can be sold as an asset or run as a recurring revenue business.</p>
+      <h2 style={{ marginTop: 40 }}>Our Rules</h2>
+      <ul style={{ margin: "16px 0 16px 20px" }}>
+        <li>Listing order is alphabetical for every firm, regardless of payment.</li>
+        <li>No pay-to-rank, no paid reviews, and no fake ratings.</li>
+        <li>We do not take a contingency fee or a share of any matter.  </li>
+        <li>Every verified listing cites its primary source.</li>
+      </ul>
     </div>
   );
 }
